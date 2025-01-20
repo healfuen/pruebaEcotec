@@ -16,19 +16,19 @@ class CursoFactory extends Factory
      */
     public function definition(): array
     {
-        $horaInicio = $this->faker->time('now', '+2 hours');
-        $horaFin = (clone $horaInicio)->modify('+2 hours');
+        $horaInicio = $this->faker->time('H:i');
+        $horaFin = date('H:i', strtotime($horaInicio . ' +2 hours'));
 
         return [
-            'codigo' => $this->faker->unique()->bothify('CURSO ###'),
+            'codigo' => $this->faker->unique()->bothify('C-###'),
             'nombre' => $this->faker->words(3, true),
             'docente' => $this->faker->name,
-            'aula' => $this->faker->bothify('Aula ##'),
+            'aula' => $this->faker->bothify('A-##'),
             'dia' => $this->faker->randomElement(['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes']),
-            'hora_inicio' => $this->faker->time('H:i'),
-            'hora_fin' => $this->faker->time('H:i'),
+            'hora_inicio' => $horaInicio,
+            'hora_fin' => $horaFin,
             'cupo' => $this->faker->numberBetween(10, 50),
-            'periodo_id' => $this->faker->numberBetween(1, 10),
+            'periodo_academico_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

@@ -19,6 +19,6 @@ class Curso extends Model
         'hora_inicio',
         'hora_fin',
         'cupo',
-        'periodo_id',
+        'periodo_academico_id',
     ];
 }
