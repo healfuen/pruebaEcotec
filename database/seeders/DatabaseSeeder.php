@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\PeriodosAcademicosSeeder;
+use Database\Seeders\EstudianteSeeder;
 use Database\Seeders\CursoSeeder;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PeriodosAcademicosSeeder::class,
             CursoSeeder::class,
+            EstudianteSeeder::class,
         ]);
     }
 }
