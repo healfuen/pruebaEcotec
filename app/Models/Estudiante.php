@@ -16,4 +16,14 @@ class Estudiante extends Model
         'apellido',
         'email',
     ];
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class);
+    }
+
+    public function cursos()
+    {
+        return $this->belongsToMany(Curso::class, 'inscripciones');
+    }
 }

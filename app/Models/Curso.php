@@ -21,4 +21,19 @@ class Curso extends Model
         'cupo',
         'periodo_academico_id',
     ];
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class);
+    }
+
+    public function periodoAcademico()
+    {
+        return $this->belongsTo(PeriodoAcademico::class);
+    }
+
+    public function estudiantes()
+    {
+        return $this->belongsToMany(Estudiante::class, 'inscripciones');
+    }
 }

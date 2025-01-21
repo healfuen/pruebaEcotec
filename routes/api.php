@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CursoController;
+use App\Http\Controllers\Api\EstudianteController;
+use App\Http\Controllers\Api\InscripcionController;
 use App\Http\Controllers\Api\PeriodoAcademicoController;
 
 /*
@@ -34,4 +36,21 @@ Route::prefix('cursos')->group(function () {
     Route::get('/{id}', [CursoController::class, 'show'])->name('cursos.show');
     Route::put('/{id}', [CursoController::class, 'update'])->name('cursos.update');
     Route::delete('/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy');
+    Route::get('/cursos-disponibles/{id}', [CursoController::class, 'disponibles'])->name('cursos.disponibles');
+    Route::get('/{id}/exportar-excel', [CursoController::class, 'exportarExcel'])->name('cursos.exportar-excel');
+});
+
+Route::prefix('estudiantes')->group(function () {
+    Route::get('/', [EstudianteController::class, 'index'])->name('estudiantes.all');
+    Route::post('/', [EstudianteController::class, 'store'])->name('estudiantes.store');
+    Route::get('/{id}', [EstudianteController::class, 'show'])->name('estudiantes.show');
+    Route::put('/{id}', [EstudianteController::class, 'update'])->name('estudiantes.update');
+    Route::delete('/{id}', [EstudianteController::class, 'destroy'])->name('estudiantes.destroy');
+    Route::get('/{id}/cursos-inscritos', [EstudianteController::class, 'cursosInscritos'])->name('estudiantes.cursos-inscritos');
+});
+
+Route::prefix('inscripciones')->group(function () {
+    Route::post('/', [InscripcionController::class, 'inscribir'])->name('inscripciones.inscribir');
+    Route::get('/reportePorEstudiante/{id}', [InscripcionController::class, 'reportePorEstudiante'])->name('inscripciones.reportePorEstudiante');
+
 });
