@@ -51,7 +51,7 @@ class CursoController extends Controller
         if ($conflictingCurso) {
             return response()->json([
                 'success' => false,
-                'message' => 'Ya existe un curso en el mismo aula con un horario traslapado.',
+                'message' => 'Ya existe un curso en el mismo aula con un horario superpuesto.',
             ], 422);
         }
 
