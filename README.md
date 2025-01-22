@@ -1,67 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Proyecto de Sistema de Inscripción Académica
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descripción
 
-## About Laravel
+Este es un proyecto backend desarrollado en Laravel que gestiona un sistema académico. Incluye funcionalidades para gestionar estudiantes, cursos, inscripciones y autenticación de usuarios mediante JWT (JSON Web Tokens).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tecnologías Utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Framework:** Laravel 10
+- **Base de Datos:** MySQL
+- **Autenticación:** JWT (Tymon\JWTAuth)
+- **Generación de Reportes:** DomPDF y Laravel Excel
+- **Gestor de Dependencias:** Composer
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requisitos Previos
 
-## Learning Laravel
+- PHP >= 8.1
+- Composer
+- MySQL
+- Node.js y npm (opcional para el frontend relacionado)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalación
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/healfuen/pruebaEcotec.git
+   ```
+2. Navega al directorio del proyecto:
+   ```bash
+   cd pruebaEcotec
+   ```
+3. Instala las dependencias de PHP:
+   ```bash
+   composer install
+   ```
+4. Configura el archivo `.env`:
+   - Copia el archivo de ejemplo:
+     ```bash
+     cp .env.example .env
+     ```
+   - Configura la conexión a la base de datos en el archivo `.env`.
+5. Genera la clave de la aplicación:
+   ```bash
+   php artisan key:generate
+   ```
+6. Ejecuta las migraciones y los seeders:
+   ```bash
+   php artisan migrate --seed
+   ```
+7. Inicia el servidor de desarrollo:
+   ```bash
+   php artisan serve
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Funcionalidades Principales
 
-## Laravel Sponsors
+### Estudiantes
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Crear, editar, eliminar y listar estudiantes.
+- Generar reportes en PDF con información de cursos inscritos.
 
-### Premium Partners
+### Cursos
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- Crear, editar, eliminar y listar cursos.
+- Validación de solapamientos de horarios y cupos disponibles.
+- Exportar información de cursos y estudiantes inscritos en formato Excel.
 
-## Contributing
+### Inscripciones
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Inscribir estudiantes en cursos disponibles.
+- Validar solapamientos de horarios antes de inscribir.
+- Listar los cursos inscritos por un estudiante.
 
-## Code of Conduct
+### Autenticación
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Registro y login de usuarios mediante JWT.
+- Middleware para proteger rutas.
 
-## Security Vulnerabilities
+## Endpoints Principales
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Autenticación
 
-## License
+- **POST** `/api/login`: Iniciar sesión.
+- **POST** `/api/register`: Registrar un usuario.
+- **POST** `/api/logout`: Cerrar sesión.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-"# pruebaEcotec" 
+### Estudiantes
+
+- **GET** `/api/estudiantes`: Listar todos los estudiantes.
+- **POST** `/api/estudiantes`: Crear un estudiante.
+- **PUT** `/api/estudiantes/{id}`: Actualizar un estudiante.
+- **DELETE** `/api/estudiantes/{id}`: Eliminar un estudiante.
+- **GET** `/api/inscripciones/reportePorEstudiante/{id}`: Generar un PDF con los cursos inscritos por un estudiante.
+
+### Cursos
+
+- **GET** `/api/cursos`: Listar todos los cursos.
+- **POST** `/api/cursos`: Crear un curso.
+- **PUT** `/api/cursos/{id}`: Actualizar un curso.
+- **DELETE** `/api/cursos/{id}`: Eliminar un curso.
+- **GET** `/api/cursos/cursos-disponibles/{estudianteId}`: Listar cursos disponibles para un estudiante.
+- **GET** `/api/cursos/exportar`: Generar un archivo Excel con información de los cursos.
+
+### Inscripciones
+
+- **POST** `/api/inscripciones`: Inscribir un estudiante en un curso.
+- **GET** `/api/inscripciones/cursos-inscritos/{estudianteId}`: Listar los cursos inscritos por un estudiante.
+
+## Generación de Reportes
+
+### PDF
+
+Se utiliza DomPDF para generar reportes detallados por estudiante con información de los cursos inscritos, como código, nombre, aula y docente.
+
+### Excel
+
+Se utiliza Laravel Excel para exportar un archivo con la siguiente información:
+
+- Datos generales del curso: código, nombre, aula y docente.
+- Lista de estudiantes inscritos: matrícula y nombre.
+- Estadísticas de inscripciones y cupos disponibles.
+
+## Consideraciones
+
+- Asegúrate de configurar correctamente las variables de entorno en el archivo `.env`.
+- Para las rutas protegidas por JWT, incluye el token de autenticación en los encabezados:
+  ```json
+  {
+      "Authorization": "Bearer <tu_token_jwt>"
+  }
+  ```
+
+---
+
+**Autor:** Héctor Fuentes Montenegro
+
