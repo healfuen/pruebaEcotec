@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CursoController;
 use App\Http\Controllers\Api\EstudianteController;
 use App\Http\Controllers\Api\InscripcionController;
 use App\Http\Controllers\Api\PeriodoAcademicoController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('inscripciones/reportePorEstudiante/{id}', [InscripcionController::class, 'reportePorEstudiante'])->name('inscripciones.reportePorEstudiante');
+Route::get('cursos/{id}/exportar-excel', [CursoController::class, 'exportarExcel'])->name('cursos.exportar-excel');
+
+Route::middleware('auth:api')->group(function () {
+
+Route::get('/user', [AuthController::class, 'user']);
+Route::post('/logout', [AuthController::class, 'logout']);
+
 Route::prefix('periodos')->group(function () {
     Route::get('/', [PeriodoAcademicoController::class, 'index'])->name('periodos.all');
     Route::post('/', [PeriodoAcademicoController::class, 'store'])->name('periodos.store');
@@ -37,7 +49,6 @@ Route::prefix('cursos')->group(function () {
     Route::put('/{id}', [CursoController::class, 'update'])->name('cursos.update');
     Route::delete('/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy');
     Route::get('/cursos-disponibles/{id}', [CursoController::class, 'disponibles'])->name('cursos.disponibles');
-    Route::get('/{id}/exportar-excel', [CursoController::class, 'exportarExcel'])->name('cursos.exportar-excel');
 });
 
 Route::prefix('estudiantes')->group(function () {
@@ -51,6 +62,6 @@ Route::prefix('estudiantes')->group(function () {
 
 Route::prefix('inscripciones')->group(function () {
     Route::post('/', [InscripcionController::class, 'inscribir'])->name('inscripciones.inscribir');
-    Route::get('/reportePorEstudiante/{id}', [InscripcionController::class, 'reportePorEstudiante'])->name('inscripciones.reportePorEstudiante');
 
+});
 });
